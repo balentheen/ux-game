@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "development making sense",
+    "version": "0.1.0",
+    "sdkVersion": "27.0.0",
+    "ios": {
+      "bundleIdentifier": "com.making.sense.development"
+    },
+    "android": {
+      "package": "com.making.sense.development"
+    },
+    "icon": "./icon.png",
+    "packagerOpts": {
+      "sourceExts": [
+        "ts",
+        "tsx"
+      ],
+      "transformer": "node_modules/react-native-typescript-transformer/index.js"
+    },
+    "splash": {
+      "image": "./src/assets/images/splash.png"
+    },
+    "privacy": "unlisted",
+    "updates": {
+      "enabled": true,
+      "checkAutomatically": "ON_ERROR_RECOVERY",
+      "fallbackToCacheTimeout": 0
+    }
+  }
+}

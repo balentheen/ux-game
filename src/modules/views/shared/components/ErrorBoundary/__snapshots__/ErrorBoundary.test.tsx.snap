@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ErrorBoundaryTest renders child 1`] = `
+<Text
+  accessible={true}
+  allowFontScaling={true}
+  ellipsizeMode="tail"
+>
+  Render test
+</Text>
+`;
+
+exports[`ErrorBoundaryTest renders placeholder when child render fails 1`] = `
+<Text
+  accessible={true}
+  allowFontScaling={true}
+  ellipsizeMode="tail"
+>
+  Error was catched
+</Text>
+`;
