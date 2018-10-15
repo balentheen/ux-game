@@ -1,3 +1,8 @@
+![Image of Screen 1](docs/screenshot_1.png)
+![Image of Screen 2](docs/screenshot_2.png)
+![Image of Screen 3](docs/screenshot_3.png)
+![Image of Coverage](docs/coverage.png)
+
 `créate-react-native-app —scripts-version=ts`
 This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).
 
