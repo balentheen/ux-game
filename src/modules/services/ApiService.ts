@@ -83,7 +83,7 @@ export class ApiService {
         createdAt: new Date(),
         updatedAt: null
       }))
-    }).pipe(delay(300));
+    }).pipe(delay(150));
   }
 
   private request<T = any>(

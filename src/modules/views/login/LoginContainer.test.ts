@@ -1,10 +1,11 @@
 import { mapStateToProps, mapDispatchToProps } from './LoginContainer';
-import { IRootState, authState } from '../../state-mgmt/rootState';
+import { authState, coreState } from '../../state-mgmt/rootState';
+import { getState } from '../../../test/entities';
 
 describe('LoginContainer', () => {
   it('should mapStateToProps, ', () => {
-    const state = { auth: { hasError: false, isLoading: false, isSessionChecked: false } };
-    expect(mapStateToProps(state as IRootState)).toEqual({ hasError: false, isLoading: false, isSessionChecked: false });
+    const state = getState();
+    expect(mapStateToProps(state)).toEqual({ hasError: false, isLoading: false });
   });
   it('should mapDispatchToProps', () => {
     const dispatch = jest.fn();
@@ -12,9 +13,16 @@ describe('LoginContainer', () => {
     expect(props).toEqual({
       setNavigation: expect.any(Function),
       login: expect.any(Function),
-      checkForUpdates: expect.any(Function),
-      recoverSession: expect.any(Function)
+      checkForUpdates: expect.any(Function)
     });
+  });
+
+  it('should dispatch setNavigation action', () => {
+    const dispatch = jest.fn();
+    const props = mapDispatchToProps(dispatch);
+    const navigation: any = 'navigation';
+    props.setNavigation(navigation);
+    expect(dispatch).toBeCalledWith(coreState.actions.setNavigation(navigation));
   });
 
   it('should dispatch login start action', () => {
@@ -26,10 +34,10 @@ describe('LoginContainer', () => {
     expect(dispatch).toBeCalledWith(authState.actions.start(username, password));
   });
 
-  it('should dispatch recover session action', () => {
+  it('should dispatch checkForUpdates action', () => {
     const dispatch = jest.fn();
     const props = mapDispatchToProps(dispatch);
-    props.recoverSession();
-    expect(dispatch).toBeCalledWith(authState.actions.recoverSession());
+    props.checkForUpdates();
+    expect(dispatch).toBeCalledWith(coreState.actions.checkForUpdates());
   });
 });

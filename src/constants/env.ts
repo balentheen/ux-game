@@ -19,7 +19,7 @@ export const ENV = {
     }
   },
   PAGINATION: {
-    LIMIT: 20
+    LIMIT: 40
   },
   CHECK_FOR_UPDATES_INTERVAL: config.CHECK_FOR_UPDATES_INTERVAL,
   STORAGE_TIMEOUT: config.STORAGE_TIMEOUT,

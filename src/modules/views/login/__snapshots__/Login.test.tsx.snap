@@ -11,16 +11,6 @@ exports[`Login renders showing errors 1`] = `
     }
   }
 >
-  <Image
-    resizeMode="contain"
-    source={1}
-    style={
-      Object {
-        "marginTop": 0,
-        "width": 130,
-      }
-    }
-  />
   <Text
     accessible={true}
     allowFontScaling={true}
@@ -36,7 +26,7 @@ exports[`Login renders showing errors 1`] = `
       }
     }
   >
-    Welcome to Opya
+    Making Sense RN seed
   </Text>
   <Text
     accessible={true}
@@ -189,7 +179,7 @@ exports[`Login renders showing errors 1`] = `
             ]
           }
           underlineColorAndroid="rgba(0, 0, 0, 0)"
-          value="Passw0rd!"
+          value="password"
         />
       </View>
     </View>
@@ -309,45 +299,6 @@ exports[`Login renders showing errors 1`] = `
 </View>
 `;
 
-exports[`Login renders without checking session 1`] = `
-<View
-  style={
-    Object {
-      "flex": 1,
-    }
-  }
->
-  <View
-    style={
-      Object {
-        "height": "100%",
-        "width": "100%",
-      }
-    }
-  >
-    <Image
-      source={1}
-      style={
-        Array [
-          Object {
-            "bottom": 0,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-          },
-          Object {
-            "height": "100%",
-            "width": "100%",
-          },
-          undefined,
-        ]
-      }
-    />
-  </View>
-</View>
-`;
-
 exports[`Login renders without crashing 1`] = `
 <View
   style={
@@ -359,16 +310,6 @@ exports[`Login renders without crashing 1`] = `
     }
   }
 >
-  <Image
-    resizeMode="contain"
-    source={1}
-    style={
-      Object {
-        "marginTop": 0,
-        "width": 130,
-      }
-    }
-  />
   <Text
     accessible={true}
     allowFontScaling={true}
@@ -384,7 +325,7 @@ exports[`Login renders without crashing 1`] = `
       }
     }
   >
-    Welcome to Opya
+    Making Sense RN seed
   </Text>
   <Text
     accessible={true}
@@ -516,7 +457,7 @@ exports[`Login renders without crashing 1`] = `
             ]
           }
           underlineColorAndroid="rgba(0, 0, 0, 0)"
-          value="Passw0rd!"
+          value="password"
         />
       </View>
     </View>
@@ -647,16 +588,6 @@ exports[`Login renders without crashing on Android 1`] = `
     }
   }
 >
-  <Image
-    resizeMode="contain"
-    source={1}
-    style={
-      Object {
-        "marginTop": 0,
-        "width": 130,
-      }
-    }
-  />
   <Text
     accessible={true}
     allowFontScaling={true}
@@ -672,7 +603,7 @@ exports[`Login renders without crashing on Android 1`] = `
       }
     }
   >
-    Welcome to Opya
+    Making Sense RN seed
   </Text>
   <Text
     accessible={true}
@@ -804,7 +735,7 @@ exports[`Login renders without crashing on Android 1`] = `
             ]
           }
           underlineColorAndroid="rgba(0, 0, 0, 0)"
-          value="Passw0rd!"
+          value="password"
         />
       </View>
     </View>

@@ -1,6 +1,14 @@
 import { GeneralModel, UserModel, TodoModel } from '../modules/models';
 import { IRootState, authState, userState, todoState } from '../modules/state-mgmt/rootState';
 
+export const getPaginationOf = (entity: any): GeneralModel.IPagination<any> => ({
+  count: 1,
+  page: 1,
+  limit: 1,
+  totalPages: 1,
+  docs: [entity]
+});
+
 export const getUser_1 = (): UserModel.IUser => ({
   _id: '9164e4c4-6521-47bb-97fd-c75ac02b2cf5',
   email: 'dgeslin@opyacare.com',
@@ -16,7 +24,7 @@ export const getUser_1 = (): UserModel.IUser => ({
   lastOnline: '2018-08-27',
   forcedStatus: UserModel.ForcedStatus.AVAILABLE,
   status: UserModel.Status.ONLINE,
-  createdAt: '2018-05-23',
+  createdAt: '2018-05-21',
   updatedAt: '2018-08-27',
 });
 
@@ -26,7 +34,7 @@ export const getTodo_1 = (): TodoModel.ITodo => ({
   title: 'i am a todo',
   description: 'i am a todo description',
   status: TodoModel.Status.PENDING,
-  createdAt: '2018-05-23',
+  createdAt: '2018-05-11',
   updatedAt: '2018-08-27',
 });
 
@@ -36,7 +44,7 @@ export const getTodo_2 = (): TodoModel.ITodo => ({
   title: 'i am a todo 2',
   description: 'i am a todo description 2',
   status: TodoModel.Status.PENDING,
-  createdAt: '2018-05-24',
+  createdAt: '2018-05-12',
   updatedAt: '2018-08-27',
 });
 
@@ -46,7 +54,17 @@ export const getTodo_3 = (): TodoModel.ITodo => ({
   title: 'i am a todo 3',
   description: 'i am a todo description 3',
   status: TodoModel.Status.PENDING,
-  createdAt: '2018-05-25',
+  createdAt: '2018-05-10',
+  updatedAt: '2018-08-27',
+});
+
+export const getTodo_4 = (): TodoModel.ITodo => ({
+  _id: '9164e4c4-9164e4c4-6521-47bb-6521x-97fd',
+  createdById: getUser_1()._id,
+  title: 'i am a todo 3',
+  description: 'i am a todo description 3',
+  status: TodoModel.Status.PENDING,
+  createdAt: '2018-05-13',
   updatedAt: '2018-08-27',
 });
 
@@ -64,5 +82,5 @@ export const getInitialState = (): IRootState => ({
 export const getState = (): IRootState => ({
   auth: { currentUserId: getUser_1()._id, isLoading: false, hasError: false },
   user: { userMap: { [getUser_1()._id]: getUser_1() } },
-  todo: { todoMap: { [getTodo_1()._id]: getTodo_1(), [getTodo_2()._id]: getTodo_2(), [getTodo_3()._id]: getTodo_3() } }
+  todo: { todoMap: { [getTodo_1()._id]: getTodo_1(), [getTodo_2()._id]: getTodo_2(), [getTodo_3()._id]: getTodo_3(), [getTodo_4()._id]: getTodo_4() } }
 });

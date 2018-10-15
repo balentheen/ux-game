@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login renders without crashing 1`] = `
+<View
+  style={
+    Object {
+      "marginBottom": 5,
+      "marginTop": 5,
+    }
+  }
+>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "color": "#1745D5",
+        "fontSize": 19,
+      }
+    }
+  >
+    I AM A TODO
+  </Text>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "fontSize": 15,
+      }
+    }
+  >
+    i am a todo description
+  </Text>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "fontSize": 13,
+      }
+    }
+  >
+    created at: 
+    2018-05-11
+  </Text>
+</View>
+`;

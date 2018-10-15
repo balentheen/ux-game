@@ -10,13 +10,7 @@ describe('auth reducer', () => {
 
   it('should return a new state ActionType.SUCCESS', () => {
     const res = getLoginResponse();
-    expect(reducer(undefined, actions.success(res._id, res.notificationChannel, res.defaultChannelId))).toEqual({
-      ...initialState,
-      currentUserId: res._id,
-      notificationChannel: res.notificationChannel,
-      defaultChannelId: res.defaultChannelId,
-      hasError: false
-    });
+    expect(reducer(undefined, actions.success(res._id))).toEqual({ ...initialState, currentUserId: res._id, hasError: false });
   });
 
   it('should return a new state ActionType.SET_LOADING as true', () => {
@@ -27,11 +21,7 @@ describe('auth reducer', () => {
     expect(reducer(undefined, actions.setLoading(false))).toEqual({ ...initialState, isLoading: false });
   });
 
-  it('should return a new state ActionType.FAIL because it throw an error', () => {
+  it('should return a new state ActionType.FAIL because it threw an error', () => {
     expect(reducer(undefined, actions.fail())).toEqual({ ...initialState, hasError: true });
-  });
-
-  it('should return a new state ActionType.SET_SESSION_CHECKED', () => {
-    expect(reducer(undefined, actions.setSessionChecked(true))).toEqual({ ...initialState, isSessionChecked: true });
   });
 });
