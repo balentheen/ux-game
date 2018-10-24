@@ -1,207 +1,494 @@
-![Image of Screen 1](docs/screenshot_1.png)
-![Image of Screen 2](docs/screenshot_2.png)
-![Image of Screen 3](docs/screenshot_3.png)
-![Image of Coverage](docs/coverage.png)
+# React Native Seed
 
-`créate-react-native-app —scripts-version=ts`
-This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).
+#### This project uses:
+* React `for rendering views`
+* Redux `for state managment`
+* Redux Observable / Rxjs `for side effecst and data flows`
 
-Below you'll find information about performing common tasks. The most recent version of this guide is available [here](https://github.com/react-community/create-react-native-app/blob/master/react-native-scripts/template/README.md).
+### Standards
+- Git Flow, please read [git-workflow](https://github.com/MakingSense/development-guidelines/blob/master/git-workflow/README.md).
+- Code reviews template. This is a standard format:
 
-## Table of Contents
-
-* [Updating to New Releases](#updating-to-new-releases)
-* [Available Scripts](#available-scripts)
-  * [npm start](#npm-start)
-  * [npm test](#npm-test)
-  * [npm run ios](#npm-run-ios)
-  * [npm run android](#npm-run-android)
-  * [npm run eject](#npm-run-eject)
-* [Writing and Running Tests](#writing-and-running-tests)
-* [Environment Variables](#environment-variables)
-  * [Configuring Packager IP Address](#configuring-packager-ip-address)
-* [Customizing App Display Name and Icon](#customizing-app-display-name-and-icon)
-* [Sharing and Deployment](#sharing-and-deployment)
-  * [Publishing to Expo's React Native Community](#publishing-to-expos-react-native-community)
-  * [Building an Expo "standalone" app](#building-an-expo-standalone-app)
-  * [Ejecting from Create React Native App](#ejecting-from-create-react-native-app)
-    * [Build Dependencies (Xcode & Android Studio)](#build-dependencies-xcode-android-studio)
-    * [Should I Use ExpoKit?](#should-i-use-expokit)
-* [Troubleshooting](#troubleshooting)
-  * [Networking](#networking)
-  * [iOS Simulator won't open](#ios-simulator-wont-open)
-  * [QR Code does not scan](#qr-code-does-not-scan)
-
-## Updating to New Releases
-
-You should only need to update the global installation of `create-react-native-app` very rarely, ideally never.
-
-Updating the `react-native-scripts` dependency of your app should be as simple as bumping the version number in `package.json` and reinstalling your project's dependencies.
-
-Upgrading to a new version of React Native requires updating the `react-native`, `react`, and `expo` package versions, and setting the correct `sdkVersion` in `app.json`. See the [versioning guide](https://github.com/react-community/create-react-native-app/blob/master/VERSIONS.md) for up-to-date information about package version compatibility.
-
-## Available Scripts
-
-If Yarn was installed when the project was initialized, then dependencies will have been installed via Yarn, and you should probably use it to run these commands as well. Unlike dependency installation, command running syntax is identical for Yarn and NPM at the time of this writing.
-
-### `npm start`
-
-Runs your app in development mode.
-
-Open it in the [Expo app](https://expo.io) on your phone to view it. It will reload if you save edits to your files, and you will see build errors and logs in the terminal.
-
-Sometimes you may need to reset or clear the React Native packager's cache. To do so, you can pass the `--reset-cache` flag to the start script:
-
+If any field below is not needed, keep the title and use N/A as message body.
 ```
-npm start --reset-cache
-# or
-yarn start --reset-cache
+## Background
+_(Explain what was the problem, what decisions you took to solve them.)_
+## Changes done
+_(Enumerate changes done, that are not obvious from the contents of the code. Explain only general approaches to the changes. Explain design decisions if any.)_
+## Pending to be done
+_(Enumerate known pending tasks and why they weren't addressed here.)_
+## Notes
+_(Optional. Any additional notes that will help reviewers understand the PR.)_
 ```
 
-#### `npm test`
+## Commands
+* **installation:** `yarn install`
+* **develop:** `yarn start:dev` *starts the app on development mode*
+* **eject:** `yarn eject` *creates react native app`s build scripts(xcode and/or android studio environment are required). Avoid doing this if possible*
+* **test:** `yarn test` *unit tests*
+* **test:** `yarn test -u` *unit tests with snapshots update. Make sure you really need to update the snapshots by checking the error messages thoroughly*
+* **build-config:** `yarn build-config<environment>` *build app.json and config.json based on the environment(development, qa, stage, production, test)*
+* **expo:** `yarn expo` *access to expo cli installed on this project*
 
-Runs the [jest](https://github.com/facebook/jest) test runner on your tests.
 
-#### `npm run ios`
+## Scaffolding
+* App.tsx (file) `app root, this only imports our own app root and should never be changed`
+* app.json (file) `expo config file containing that partially changes dinamically depending on the env`
+* src (folder) `source code`
+* * assets (folder) `media assets`
+* * config (folder) `environment config files`
+* * * \<env\>.config.json (file) `env vars to be written on config.json depending on the env`
+* * constants (folder) `app constants`
+* * modules (folder) `main app modules`
+* * * models (folder) `entity models, typeguards, interfaces, enums, and other ts related files`
+* * * services (folder) `services that will be injected as dependencies to be used on epics`
+* * * state-mgmt (folder) `state management files grouped by entity and store creation`
+* * * views (folder) `react components grouped by page and shared folder including cross app components`
+* * test (folder) `testing helpers and mocks`
+* * types (folder) `general types that doesn't feet any model. This is rarely used`
+* * utils (folder) `utilities`
 
-Like `npm start`, but also attempts to open your app in the iOS Simulator if you're on a Mac and have it installed.
+## Code Examples
 
-#### `npm run android`
+### Models
+* Definition files for interfaces groped by namespace
+* Static typing advantages
 
-Like `npm start`, but also attempts to open your app on a connected Android device or emulator. Requires an installation of Android build tools (see [React Native docs](https://facebook.github.io/react-native/docs/getting-started.html) for detailed setup). We also recommend installing Genymotion as your Android emulator. Once you've finished setting up the native build environment, there are two options for making the right copy of `adb` available to Create React Native App:
+```typescript
+/** namespace to group interfaces */
+export namespace UserModel {
+  export enum Status {
+    ONLINE = 'online',
+    OFFLINE = 'offline'
+  }
 
-##### Using Android Studio's `adb`
-
-1. Make sure that you can run adb from your terminal.
-2. Open Genymotion and navigate to `Settings -> ADB`. Select “Use custom Android SDK tools” and update with your [Android SDK directory](https://stackoverflow.com/questions/25176594/android-sdk-location).
-
-##### Using Genymotion's `adb`
-
-1. Find Genymotion’s copy of adb. On macOS for example, this is normally `/Applications/Genymotion.app/Contents/MacOS/tools/`.
-2. Add the Genymotion tools directory to your path (instructions for [Mac](http://osxdaily.com/2014/08/14/add-new-path-to-path-command-line/), [Linux](http://www.computerhope.com/issues/ch001647.htm), and [Windows](https://www.howtogeek.com/118594/how-to-edit-your-system-path-for-easy-command-line-access/)).
-3. Make sure that you can run adb from your terminal.
-
-#### `npm run eject`
-
-This will start the process of "ejecting" from Create React Native App's build scripts. You'll be asked a couple of questions about how you'd like to build your project.
-
-**Warning:** Running eject is a permanent action (aside from whatever version control system you use). An ejected app will require you to have an [Xcode and/or Android Studio environment](https://facebook.github.io/react-native/docs/getting-started.html) set up.
-
-## Customizing App Display Name and Icon
-
-You can edit `app.json` to include [configuration keys](https://docs.expo.io/versions/latest/guides/configuration.html) under the `expo` key.
-
-To change your app's display name, set the `expo.name` key in `app.json` to an appropriate string.
-
-To set an app icon, set the `expo.icon` key in `app.json` to be either a local path or a URL. It's recommended that you use a 512x512 png file with transparency.
-
-## Writing and Running Tests
-
-This project is set up to use [jest](https://facebook.github.io/jest/) for tests. You can configure whatever testing strategy you like, but jest works out of the box. Create test files in directories called `__tests__` or with the `.test` extension to have the files loaded by jest. See the [the template project](https://github.com/react-community/create-react-native-app/blob/master/react-native-scripts/template/App.test.js) for an example test. The [jest documentation](https://facebook.github.io/jest/docs/en/getting-started.html) is also a wonderful resource, as is the [React Native testing tutorial](https://facebook.github.io/jest/docs/en/tutorial-react-native.html).
-
-## Environment Variables
-
-You can configure some of Create React Native App's behavior using environment variables.
-
-### Configuring Packager IP Address
-
-When starting your project, you'll see something like this for your project URL:
-
-```
-exp://192.168.0.2:19000
+  /** this is how all user objects should look */
+  export interface IUser {
+    id?: string; // optional id field, because it's not there on entity creation
+    email: string;
+    name: string;
+    status: Status;
+  }
+}
 ```
 
-The "manifest" at that URL tells the Expo app how to retrieve and load your app's JavaScript bundle, so even if you load it in the app via a URL like `exp://localhost:19000`, the Expo client app will still try to retrieve your app at the IP address that the start script provides.
+### Services
+* Classes to help on epics *(rxjs side effects)* to achieve several things as http requests, access to the logger, etc.
+* They can be static or not depending on the needs, they are injected (instantiated) on the store file `state-mgmt/store.ts` *(code example is shown later on this file)*
 
-In some cases, this is less than ideal. This might be the case if you need to run your project inside of a virtual machine and you have to access the packager via a different IP address than the one which prints by default. In order to override the IP address or hostname that is detected by Create React Native App, you can specify your own hostname via the `REACT_NATIVE_PACKAGER_HOSTNAME` environment variable:
+```typescript
+/** Logger */
+import { ENV } from '../../constants';
+import { EventTracker } from './EventTracker';
 
-Mac and Linux:
+export abstract class Logger {
+  private static shouldLog = !ENV.IS_TEST;
+  private static printer = console;
 
-```
-REACT_NATIVE_PACKAGER_HOSTNAME='my-custom-ip-address-or-hostname' npm start
-```
+  public static log = (...args) => Logger.logMethod('log', ...args);
+  public static info = (...args) => Logger.logMethod('info', ...args);
+  public static warn = (...args) => Logger.logMethod('warn', ...args);
+  public static error = (...args) => Logger.logMethod('error', ...args);
+  public static table = (...args) => Logger.logMethod('table', ...args);
 
-Windows:
-```
-set REACT_NATIVE_PACKAGER_HOSTNAME='my-custom-ip-address-or-hostname'
-npm start
-```
+  private static logMethod = (level, ...args) => {
+    EventTracker[EventTracker[level] ? level : 'debug'](...args);
+    if (!Logger.shouldLog) return;
+    Logger.printer[level](...args);
+  }
 
-The above example would cause the development server to listen on `exp://my-custom-ip-address-or-hostname:19000`.
-
-## Sharing and Deployment
-
-Create React Native App does a lot of work to make app setup and development simple and straightforward, but it's very difficult to do the same for deploying to Apple's App Store or Google's Play Store without relying on a hosted service.
-
-### Publishing to Expo's React Native Community
-
-Expo provides free hosting for the JS-only apps created by CRNA, allowing you to share your app through the Expo client app. This requires registration for an Expo account.
-
-Install the `exp` command-line tool, and run the publish command:
-
-```
-$ npm i -g exp
-$ exp publish
+}
 ```
 
-### Building an Expo "standalone" app
+### State-mgmt
+* It groups all redux files in the app by entity
+* It uses *redux-observable* middleware to emit *actions* into *rxjs observables* called `epics` which *emites actions* in return
+* The side effect flow looks like this:
+* * action `GET_USER_START` was `dispatched` into the *redux store*
+* * an epic received that action as an observable emition > then called the server > then emited a new action `GET_USER_SUCCESS` which will be `dispatched` into the *redux store*
+* * a `reducer` with a *switch case* for `GET_USER_SUCCESS` adds the user to the user's state
 
-You can also use a service like [Expo's standalone builds](https://docs.expo.io/versions/latest/guides/building-standalone-apps.html) if you want to get an IPA/APK for distribution without having to build the native code yourself.
+#### actions 
+* Actions are payloads of information that send data from the application to the store
+```typescript
 
-### Ejecting from Create React Native App
-
-If you want to build and deploy your app yourself, you'll need to eject from CRNA and use Xcode and Android Studio.
-
-This is usually as simple as running `npm run eject` in your project, which will walk you through the process. Make sure to install `react-native-cli` and follow the [native code getting started guide for React Native](https://facebook.github.io/react-native/docs/getting-started.html).
-
-#### Should I Use ExpoKit?
-
-If you have made use of Expo APIs while working on your project, then those API calls will stop working if you eject to a regular React Native project. If you want to continue using those APIs, you can eject to "React Native + ExpoKit" which will still allow you to build your own native code and continue using the Expo APIs. See the [ejecting guide](https://github.com/react-community/create-react-native-app/blob/master/EJECTING.md) for more details about this option.
-
-## Troubleshooting
-
-### Networking
-
-If you're unable to load your app on your phone due to a network timeout or a refused connection, a good first step is to verify that your phone and computer are on the same network and that they can reach each other. Create React Native App needs access to ports 19000 and 19001 so ensure that your network and firewall settings allow access from your device to your computer on both of these ports.
-
-Try opening a web browser on your phone and opening the URL that the packager script prints, replacing `exp://` with `http://`. So, for example, if underneath the QR code in your terminal you see:
-
-```
-exp://192.168.0.1:19000
+/** Action types constants */
+export enum ActionType {
+  GET_START = '[user] get start',
+  GET_SUCCESS = '[user] get success'
+}
+/** action creators */
+export const actions = {
+  getStart: (userId: string) => ({ type: ActionType.GET_START, payload: { userId } }),
+  getSuccess: (user: UserModel.IUser) => ({ type: ActionType.GET_SUCCESS, payload: { user } })
+};
 ```
 
-Try opening Safari or Chrome on your phone and loading
+#### epic
+* Function that returns an rxjs observable that expects to receive an action and emits n actions
+* * action$ `is an observable that emits redux actions`
+* * state$ `is an observable containing the current redux state. It is usually accesed like this: state$.value.auth.currentUserId`
+
+```typescript
+export const userGetEpicGetUserList: Epic<IAction, IAction, IRootState, IEpicDependencies> = (action$, state$, deps) => // returns an observable
+  action$.pipe( // pipes the action observable to change the flow
+    ofType(ActionType.SET_LIST_START), // filter to get only ActionType.SET_LIST_START emitions
+    mergeMap(action => of(null).pipe( // mergeMap to a new observable pipe in case it throws an error and completes, the next SET_LIST_START will still be listened to
+      mergeMap(({ payload }) => deps.apiService.getUserList(payload.idList)), // merges with the apiService observable
+      map(res => actions.setListSuccess(res.docs)), // maps the server's response into an action object { type: 'action type string' payload: { user: <user data> } }
+      catchError(error => of(coreState.actions.epicError(error))) // catches error, completes this pipe and emits an action object { type: 'error type', payload: <error payload> } as the final value
+    ))
+  );
 
 ```
-http://192.168.0.1:19000
+
+#### reducer
+* straightforward redux reducer
+* we use maps instead of lists so we avoid looping, repeated values, select easly, check for thruthy values, compose with other states, etc.
+
+```typescript
+import { IState, initialState } from './state';
+import { ActionType } from './actions';
+
+export const reducer = (state: IState = initialState, { type, payload }: { type: ActionType, payload: any }): IState => { // this return type helps writing reducers using standard ts advantages
+  switch (type) {
+    case ActionType.SET_LIST_SUCCESS:
+      return { ...state, userMap: payload.userList.reduce((total, item) => ({ ...total, [item._id]: item }), state.userMap) };
+    case ActionType.SET_SUCCESS:
+      return { ...state, userMap: { ...state.userMap, [payload.user._id]: payload.user } };
+    default:
+      return state;
+  }
+};
+
 ```
 
-and
+#### store
+* Standard redux store with the added responsibility of creating the provider for the dependency injection on epics
+
+```typescript
+import { combineReducers, createStore, applyMiddleware, Store } from 'redux';
+import { createEpicMiddleware, combineEpics } from 'redux-observable';
+import { composeWithDevTools } from 'redux-devtools-extension';
+
+import { ApiService } from '../services/ApiService';
+import { Logger } from '../services/Logger';
+import { IRootState, IEpicDependencies, authState, userState, coreState } from './rootState';
+
+/** combining epics (observable getters) to use as middeware */
+const rootEpic = combineEpics<any>(...authState.epics, ...coreState.epics, ...userState.epics);
+
+/** provides for DI */
+const epicMiddleware = createEpicMiddleware({
+  dependencies: {
+    apiService: new ApiService(),
+    logger: Logger
+  } as IEpicDependencies
+});
+
+const withDevtools = composeWithDevTools({ maxAge: 20, shouldCatchErrors: true });
+
+const store: Store = createStore<IRootState, any, any, any>(
+  combineReducers({ auth: authState.reducer, user: userState.reducer } as any), withDevtools(applyMiddleware(epicMiddleware))
+);
+
+export { store };
+
+epicMiddleware.run(rootEpic); // starts epic middleware so it subscribes to actions being dispatched
 
 ```
-http://192.168.0.1:19001
+
+### views
+* Composed of components and containers to render views
+
+#### containers
+* containers are the connection between redux (state and action dispatchers)
+* they handle the selection and composition of data needed to render
+* the DO NOT contain tsx/jsx or other react code
+
+```typescript
+import { connect } from 'react-redux';
+
+import { MessageModel } from '../../models';
+import { IRootState, messageState } from '../../state-mgmt/rootState';
+import Communication from './Communication';
+
+export const mapStateToProps = (state: IRootState) => ({
+  messageMap: state.message.messageMap, // straightforward selection
+  currentUser: state.user.userMap[state.auth.currentUserId] // composition using user and auth states
+});
+
+export const mapDispatchToProps = dispatch => ({
+  sendMessage: (message: MessageModel.IMessage) => dispatch(messageState.actions.setStart(message))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Communication);
+
 ```
 
-If this works, but you're still unable to load your app by scanning the QR code, please open an issue on the [Create React Native App repository](https://github.com/react-community/create-react-native-app) with details about these steps and any other error messages you may have received.
+#### components
+* React components, mostly presentational with little to no business logic
+* Components try to be as *dumb* as possible, delegating all complex tasks to:
+* * epics `through containers to fetch, create data or other flows`
+* * helpers/utils `for agnostic logic like parsing, formatting, calculating, etc`
+* * child components `for reusable renders, branching or other render related tasks`
 
-If you're not able to load the `http` URL in your phone's web browser, try using the tethering/mobile hotspot feature on your phone (beware of data usage, though), connecting your computer to that WiFi network, and restarting the packager. If you are using a VPN you may need to disable it.
+```typescript
+import * as React from 'react';
 
-### iOS Simulator won't open
+import styles from './styles';
 
-If you're on a Mac, there are a few errors that users sometimes see when attempting to `npm run ios`:
+export interface ILoginProps {
+  login: (username: string, password: string) => void;
+}
 
-* "non-zero exit code: 107"
-* "You may need to install Xcode" but it is already installed
-* and others
+export interface ILoginState {
+  username: string;
+  password: string;
+}
 
-There are a few steps you may want to take to troubleshoot these kinds of errors:
+export default class Login extends React.PureComponent<ILoginProps, ILoginState> {
+  public state: ILoginState = { username: '', password: '' };
 
-1. Make sure Xcode is installed and open it to accept the license agreement if it prompts you. You can install it from the Mac App Store.
-2. Open Xcode's Preferences, the Locations tab, and make sure that the `Command Line Tools` menu option is set to something. Sometimes when the CLI tools are first installed by Homebrew this option is left blank, which can prevent Apple utilities from finding the simulator. Make sure to re-run `npm/yarn run ios` after doing so.
-3. If that doesn't work, open the Simulator, and under the app menu select `Reset Contents and Settings...`. After that has finished, quit the Simulator, and re-run `npm/yarn run ios`.
+  public login = () => {
+    const { login } = this.props;
+    const { username, password } = this.state;
+    login(username, password);
+  }
 
-### QR Code does not scan
+  public setUsername = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ username: event.target.value });
+  }
+  public setPassword = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ password: event.target.value });
+  }
 
-If you're not able to scan the QR code, make sure your phone's camera is focusing correctly, and also make sure that the contrast on the two colors in your terminal is high enough. For example, WebStorm's default themes may [not have enough contrast](https://github.com/react-community/create-react-native-app/issues/49) for terminal QR codes to be scannable with the system barcode scanners that the Expo app uses.
+  public render() {
+    const { username, password } = this.state;
+    return (
+      <div style={styles.loginContainer}>
+        <form style={styles.loginForm}>
+          <input style={styles.loginInput} onChange={this.setUsername} value={username} placeholder="username" type="text" />
+          <input style={styles.loginInput} onChange={this.setPassword} value={password} placeholder="password" type="password" />
+          <button style={styles.loginButton} onClick={this.login} type="button">Login</button>
+        </form>
+      </div>
+    );
+  }
+}
+```
 
-If this causes problems for you, you may want to try changing your terminal's color theme to have more contrast, or running Create React Native App from a different terminal. You can also manually enter the URL printed by the packager script in the Expo app's search bar to load it manually.
+### test
+* tests aim to achieve 100% coverage and have examples for each test scenario that might occur
+
+#### Service
+
+```typescript
+import { Logger } from './Logger';
+
+describe('Logger', () => {
+  beforeEach(() => {
+    (Logger as any).printer = { log: jest.fn(), info: jest.fn(), warn: jest.fn(), error: jest.fn(), table: jest.fn() };
+  });
+
+  it('should log with all logging methods', () => {
+    const data = 'well hello..';
+    Logger.log(data);
+    expect((Logger as any).printer.log).toHaveBeenCalledWith(data);
+    Logger.info(data);
+    expect((Logger as any).printer.info).toHaveBeenCalledWith(data);
+    Logger.warn(data);
+    expect((Logger as any).printer.warn).toHaveBeenCalledWith(data);
+    Logger.error(data);
+    expect((Logger as any).printer.warn).toHaveBeenCalledWith(data);
+    Logger.table(data);
+    expect((Logger as any).printer.table).toHaveBeenCalledWith(data);
+  });
+});
+```
+
+#### Epic
+
+```typescript
+describe('auth epics', () => {
+  let deps: IEpicDependencies;
+  let error;
+  beforeEach(() => {
+    error = new Error('scary error');
+    deps = getDeps(); // fresh dependency mocks from the test helpers
+  });
+
+  describe('authGetEpicAuthStart', () => {
+    const email = 'email';
+    const password = 'password';
+
+    it('should get epic for auth start', done => {
+      const emitedActions = [];
+      const loginResponse = getLoginResponse();
+      const action$ = ActionsObservable.of(actions.start(email, password));
+      authGetEpicAuthStart(action$, {/** if we need a mock state, this is the place to put it */} as any, deps).subscribe(output => {
+        emitedActions.push(output); // we save each emision here
+        if (output.type === ActionType.SET_LOADING && output.payload.isLoading === false) { // we chouse on which emision to stop and test
+          expect(deps.apiService.login).toBeCalledWith({ email, password });
+          expect(deps.asyncStorageService.setItem).toBeCalledWith(ENV.STORAGE_KEY.AUTH, { userId: loginResponse._id });
+          expect(emitedActions[0]).toEqual(actions.setLoading(true));
+          expect(emitedActions[1]).toEqual(actions.success(loginResponse._id, loginResponse.notificationChannel, loginResponse.defaultChannelId));
+          expect(emitedActions[2]).toEqual(coreState.actions.bootstrap(loginResponse.access_token));
+          expect(emitedActions[3]).toEqual(actions.setLoading(false));
+          done();
+        }
+      });
+    });
+
+    /** we also test the catchError branch */
+    it('should catch errors and dispatch them to the auth error handler', done => {
+      const emitedActions = [];
+      deps.apiService.login = () => { throw error; };
+      authGetEpicAuthStart(ActionsObservable.of(actions.start(email, password)), {} as any, deps).subscribe(output => {
+        emitedActions.push(output);
+        if (output.type === ActionType.SET_LOADING && output.payload.isLoading === false) {
+          expect(emitedActions[0]).toEqual(actions.setLoading(true));
+          expect(emitedActions[1]).toEqual(actions.fail());
+          expect(emitedActions[2]).toEqual(actions.setLoading(false));
+          done();
+        }
+      });
+    });
+  });
+});
+```
+
+#### Reducer
+
+```typescript
+import { reducer } from './reducer';
+import { initialState } from './state';
+import { actions } from './actions';
+import { getUser_1 } from '../../../test/entities';
+
+describe('user reducer', () => {
+  it('should return state without mutations when no switch case matches', () => {
+    expect(reducer(initialState, { type: null, payload: null })).toBe(initialState);
+  });
+
+  it('should return a new state ActionType.SET_LIST_SUCCESS', () => {
+    const user = getUser_1();
+    expect(reducer(undefined, actions.setListSuccess([user]))).toEqual({ ...initialState, userMap: { [user._id]: user } });
+  });
+
+  it('should return a new state ActionType.SET_SUCCESS', () => {
+    const user = getUser_1();
+    expect(reducer(undefined, actions.setSuccess(user))).toEqual({ ...initialState, userMap: { [user._id]: user } });
+  });
+});
+```
+
+#### Container:
+
+```typescript
+/** START the container looks like this */
+import { connect } from 'react-redux';
+
+import { IRootState, channelState } from '../../state-mgmt/rootState';
+import About from './About';
+
+export const mapStateToProps = (state: IRootState) => ({
+  defaultChannelId: state.auth.defaultChannelId
+});
+
+export const mapDispatchToProps = dispatch => ({
+  openChannel: (channelId: string) => dispatch(channelState.actions.openChannel(channelId))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(About);
+/** END the container looks like this */
+
+import { mapStateToProps, mapDispatchToProps } from './AboutContainer';
+import { IRootState, channelState } from '../../state-mgmt/rootState';
+import { getState } from '../../../test/entities'; // mock state generated with mock entities
+
+describe('AboutContainer', () => {
+  let state: IRootState;
+  beforeEach(() => {
+    state = getState();
+  });
+
+  /** testing the state is maping the correct data to prop */
+  it('should mapStateToProps, ', () => {
+    expect(mapStateToProps(state)).toEqual({
+      defaultChannelId: state.auth.defaultChannelId
+    });
+  });
+
+  /** testing that props that contain dispach functions are there */
+  it('should mapDispatchToProps', () => {
+    const dispatch = jest.fn();
+    const props = mapDispatchToProps(dispatch);
+    expect(props).toEqual({
+      openChannel: expect.any(Function)
+    });
+  });
+
+  /** testing that the correct actions are being dispatched */
+  it('should openChannel', () => {
+    const dispatch = jest.fn();
+    const props = mapDispatchToProps(dispatch);
+    props.openChannel(state.auth.defaultChannelId);
+    expect(dispatch).toBeCalledWith(channelState.actions.openChannel(state.auth.defaultChannelId));
+  });
+});
+
+```
+
+#### Component
+* for most of component testing, we are using snapshots
+* a snapshot is created for each version of the render so we cover all branches
+
+```typescript
+import * as React from 'react';
+import { shallow } from 'enzyme';
+import { create } from 'react-test-renderer';
+
+import Login from './Login';
+
+describe('Login Component', () => {
+  let Component;
+  let defaultProps;
+
+  beforeEach(() => {
+    defaultProps = {
+      login: jest.fn()
+    };
+    Component = shallow(<Login {...defaultProps} />);
+  });
+
+  describe('render', () => {
+    /** if we had more branches... like a render with and without error messages, we would have another snapshot */
+    it('should render with default props', () => {
+      expect(create(Component).toJSON()).toMatchSnapshot();
+    });
+  });
+
+  describe('methods', () => {
+    it('should set username and password and login', () => {
+      const username = 'username';
+      const password = 'password';
+      Component.find('input[type="text"]').simulate('change', { target: { value: username } });
+      Component.find('input[type="password"]').simulate('change', { target: { value: password } });
+      expect(Component.instance().state).toEqual({ username, password });
+      Component.find('button').simulate('click');
+      expect(defaultProps.login).toBeCalledWith(username, password);
+    });
+  });
+});
+```
+
+#### This section contains a guide of what we use to generate the react native application
+
+* This project includes the following features:
+- [React Native](https://facebook.github.io/react-native/) mobile apps using TypeScript and React
+* * [expo](https://expo.io/) `build cross-platform native apps`
+* * [redux](https://github.com/reduxjs/redux) `predictable state container for JavaScript apps`
+* * [rxjs](https://rxjs-dev.firebaseapp.com/) `reactive programming using Observables, to make it easier to compose asynchronous or callback-based code`
+* * [rollbar](https://github.com/marketplace/rollbar) `real-time error alerting & debugging`
+* * [jest](https://www.npmjs.com/package/jest) `unit testing`
