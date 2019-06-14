@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FaqQuestion renders without crashing 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#FFF",
+      "borderRadius": 4,
+      "height": 147,
+      "marginVertical": 5,
+      "padding": 15,
+      "width": 168,
+    }
+  }
+>
+  <View
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    collapsable={undefined}
+    hasTVPreferredFocus={undefined}
+    hitSlop={undefined}
+    isTVSelectable={true}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "backgroundColor": "#FFF",
+        "borderRadius": 5,
+        "elevation": 3,
+        "height": "100%",
+        "opacity": 1,
+        "padding": 15,
+        "shadowColor": "#1E272E",
+        "shadowOffset": Object {
+          "height": 0,
+          "width": 0,
+        },
+        "shadowOpacity": 0.2,
+        "shadowRadius": 5,
+        "width": "100%",
+      }
+    }
+    testID={undefined}
+    tvParallaxProperties={undefined}
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#676767",
+          "fontSize": 12,
+          "fontWeight": "400",
+        }
+      }
+    >
+      Basics
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#1E272E",
+          "fontSize": 13,
+          "fontWeight": "600",
+          "marginTop": 10,
+        }
+      }
+    >
+      Frequently asked question?
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "alignSelf": "flex-end",
+          "bottom": 15,
+          "color": "#0076FF",
+          "fontSize": 9,
+          "fontWeight": "600",
+          "left": 15,
+          "position": "absolute",
+        }
+      }
+    />
+  </View>
+</View>
+`;

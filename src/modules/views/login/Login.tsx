@@ -1,106 +1,99 @@
-import React from 'react';
-import { Image, View, Text, TextInput, KeyboardAvoidingView, ImageBackground } from 'react-native';
-import { NavigationScreenProp, NavigationStackScreenOptions } from 'react-navigation';
-import { Button } from 'react-native-elements';
+  import React from 'react';
+  import { Image, View, Text, ScrollView, KeyboardAvoidingView, ImageBackground } from 'react-native';
+  import { NavigationScreenProp, NavigationStackScreenOptions } from 'react-navigation';
+  import { Button } from 'react-native-elements';
 
-import { ENV, STYLE } from '../../../constants';
-import styles from './styles';
+  import { ENV, STYLE, IMAGES } from '../../../constants';
+  import styles from './styles';
+  import { MenuItem } from '../shared/components';
 
-export interface ILoginProps {
-  isLoading: boolean;
-  hasError: boolean;
-  navigation: NavigationScreenProp<any, any>;
-  login: (email: string, password: string) => void;
-  setNavigation: (navigation: NavigationScreenProp<any, any>) => void;
-  checkForUpdates: () => void;
-}
-
-export interface ILoginState {
-  email: string;
-  password: string;
-}
-
-export default class Login extends React.PureComponent<ILoginProps, ILoginState> {
-  public static navigationOptions: NavigationStackScreenOptions = {
-    title: 'Login'
-  };
-
-  public static isAndroid: boolean = ENV.PLATFORM.IS_ANDROID;
-
-  public state: ILoginState = {
-    email: 'dgeslin@makingsense.com',
-    password: 'password'
-  };
-
-  public componentDidMount() {
-    const { setNavigation, navigation, checkForUpdates } = this.props;
-    setNavigation(navigation);
-    checkForUpdates();
+  export interface ILoginProps {
+    isLoading: boolean;
+    hasError: boolean;
+    navigation: NavigationScreenProp<any, any>;
+    login: (email: string, password: string) => void;
+    setNavigation: (navigation: NavigationScreenProp<any, any>) => void;
+    checkForUpdates: () => void;
   }
 
-  public render() {
-    const { isLoading, hasError } = this.props;
-    const { email, password } = this.state;
+  export interface ILoginState {
+    email: string;
+    password: string;
+  }
 
-    return (
-      <View style={styles.loginContainer}>
-        <Text style={styles.heading1}>Making Sense RN seed</Text>
-        <Text style={styles.heading2}>Please login to your account</Text>
-        {(hasError) ? <Text style={styles.headingError}>{'Oops! Invalid email or password'}</Text> : null}
-        <KeyboardAvoidingView
-          behavior="padding"
-          style={styles.keyboardContainer}
-          keyboardVerticalOffset={Login.isAndroid ? ENV.KEYBOARD_VERTICAL_OFFSET : 0}
-        >
-          <View style={styles.inputTemplate}>
-            <View style={styles.inputContainer}>
-              <Text style={styles.inputLabel}>{'EMAIL:'}</Text>
-              <TextInput
-                keyboardType="email-address"
-                placeholder="Enter your email..."
-                placeholderTextColor={STYLE.COLOR.OCTANARY}
-                style={[styles.input, hasError && styles.inputError]}
-                underlineColorAndroid="rgba(0, 0, 0, 0)"
-                value={email}
-                onChangeText={(value) => this.handleOnChange('email', value)}
-              />
-            </View>
-            <View style={styles.inputContainer}>
-              <Text style={styles.inputLabel}>{'Password:'.toUpperCase()}</Text>
-              <TextInput
-                placeholder="Enter your password..."
-                placeholderTextColor={STYLE.COLOR.OCTANARY}
-                secureTextEntry={true}
-                style={[styles.input, hasError && styles.inputError]}
-                underlineColorAndroid="rgba(0, 0, 0, 0)"
-                value={password}
-                onChangeText={(value) => this.handleOnChange('password', value)}
-              />
-            </View>
+  export default class Login extends React.PureComponent<ILoginProps, ILoginState> {
+    public static navigationOptions: NavigationStackScreenOptions = {
+      headerTintColor: STYLE.COLOR.WHITE,
+      headerTitle: <Image source={IMAGES.ICONS.GAME_LOGO} />,
+      headerStyle: { height: 50, backgroundColor: 'white', borderBottomWidth: 0, elevation: 0 }
+    };
+
+    public static isAndroid: boolean = ENV.PLATFORM.IS_ANDROID;
+
+    public state: ILoginState = {
+      email: 'dgeslin@makingsense.com',
+      password: 'password'
+    };
+
+    public componentDidMount() {
+      const { setNavigation, navigation, checkForUpdates } = this.props;
+      setNavigation(navigation);
+      checkForUpdates();
+    }
+
+    public render() {
+      const { isLoading, hasError } = this.props;
+      const { email, password } = this.state;
+
+      return (
+        <View style={styles.loginContainer}>
+          <Text style={styles.heading1}>Select category</Text>
+          <Text style={styles.heading2}>On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized.</Text>
+          <ScrollView
+            style={styles.questionsContainer}
+            showsHorizontalScrollIndicator={false}
+            horizontal={true}
+          >
+            <MenuItem
+              icon={IMAGES.ICONS.UX_ICON}
+              title="UX"
+              description="Our team of professionals in the United States, Argentina and Mexico, deliver end-to-end UX-focused software."
+              onPress={() => this.props.navigation.navigate('Game')}
+            />
+            <MenuItem
+              icon={IMAGES.ICONS.UX_ICON}
+              title="UX"
+              description="Our team of professionals in the United States, Argentina and Mexico, deliver end-to-end UX-focused software."
+              onPress={() => this.props.navigation.navigate('Game')}
+            />
+            <MenuItem
+              icon={IMAGES.ICONS.UX_ICON}
+              title="UX"
+              description="Our team of professionals in the United States, Argentina and Mexico, deliver end-to-end UX-focused software."
+              onPress={() => this.props.navigation.navigate('Game')}
+            />
+            <MenuItem
+              icon={IMAGES.ICONS.UX_ICON}
+              title="UX"
+              description="Our team of professionals in the United States, Argentina and Mexico, deliver end-to-end UX-focused software."
+              onPress={() => this.props.navigation.navigate('Game')}
+            />
+          </ScrollView>
+          <View style={{ position: 'absolute', bottom: 30, left: 0, right: 0, alignItems: 'center' }}>
+            <Image source={IMAGES.ICONS.MS_GREEN} />
           </View>
-        </KeyboardAvoidingView>
-        <Button
-          loading={isLoading}
-          disabled={isLoading}
-          onPress={this.login}
-          title="Login"
-          backgroundColor={STYLE.COLOR.PRIMARY}
-          borderRadius={STYLE.BORDER.QUARTER}
-          fontSize={STYLE.FONT.SIZE.BUTTON_LARGE}
-          fontWeight={STYLE.FONT.WEIGHTS.MEDIUM}
-        />
-      </View>
+        </View>
 
-    );
-  }
+      );
+    }
 
-  private handleOnChange(field: 'email' | 'password', value: string) {
-    this.setState({ [field]: value } as any);
-  }
+    private handleOnChange(field: 'email' | 'password', value: string) {
+      this.setState({ [field]: value } as any);
+    }
 
-  private login = () => {
-    const { email, password } = this.state;
-    const { login } = this.props;
-    login(email, password);
+    private login = () => {
+      const { email, password } = this.state;
+      const { login } = this.props;
+      login(email, password);
+    }
   }
-}

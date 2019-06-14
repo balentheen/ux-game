@@ -2,21 +2,29 @@ import { StyleSheet, Platform } from 'react-native';
 import { STYLE } from '../../../constants';
 
 export default StyleSheet.create({
+  ux: {
+    color: '#D1D1D6',
+    fontSize: 22,
+    fontFamily: 'montserrat-semibold',
+    marginLeft: 5
+  },
   heading1: {
     color: 'black',
-    fontSize: STYLE.FONT.SIZE.HEADING_1,
+    fontSize: 22,
     fontFamily: 'montserrat-regular',
-    marginBottom: 8,
-    marginTop: 16,
+    marginTop: 5,
     textAlign: 'left'
   },
   heading2: {
-    marginTop: 15,
-    color: STYLE.COLOR.QUATERNARY,
-    fontSize: STYLE.FONT.SIZE.HEADING_2,
+    color: 'black',
+    fontSize: 12,
+    fontFamily: 'montserrat-semibold',
+    marginTop: 5,
+  },
+  countdown: {
+    color: 'black',
+    fontSize: 90,
     fontFamily: 'montserrat-regular',
-    letterSpacing: 0.2,
-    marginBottom: 0
   },
   headingError: {
     color: STYLE.COLOR.NONARY,

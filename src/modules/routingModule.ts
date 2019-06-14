@@ -1,12 +1,12 @@
 import { createStackNavigator } from 'react-navigation';
 
-import TodoListContainer from './views/todo-list';
+import GameContainer from './views/game';
 import LoginContainer from './views/login';
 
 export default createStackNavigator(
   {
     Login: LoginContainer,
-    TodoList: TodoListContainer
+    Game: GameContainer
   },
   { initialRouteName: 'Login' }
 );
