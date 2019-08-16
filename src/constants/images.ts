@@ -4,5 +4,6 @@ export const IMAGES = {
     MS_GREEN: require('../assets/images/MS-Green.png'),
     BACK: require('../assets/images/back-icon.png'),
     GAME_LOGO: require('../assets/images/game-logo.png'),
+    ARROW_RIGHT: require('../assets/images/arrow-right.png'),
   },
 };

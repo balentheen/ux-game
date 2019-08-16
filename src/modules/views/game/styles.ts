@@ -81,5 +81,23 @@ export default StyleSheet.create({
   fullScreenImage: {
     width: '100%',
     height: '100%'
-  }
+  },
+  questionTitle: {
+    marginTop: 20,
+    width: '100%',
+    fontFamily: 'montserrat-bold',
+    color: '#000',
+    fontSize: 75
+  },
+  nextWord: {
+    position: 'absolute',
+    left: 10,
+    bottom: 10,
+    right: 10,
+    height: 50,
+    backgroundColor: '#00B159',
+    borderRadius: 3,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });

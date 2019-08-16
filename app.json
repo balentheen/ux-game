@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "test making sense",
+    "name": "development making sense",
     "version": "0.1.0",
-    "sdkVersion": "27.0.0",
+    "sdkVersion": "32.0.0",
     "ios": {
-      "bundleIdentifier": "com.making.sense.test"
+      "bundleIdentifier": "com.making.sense.development"
     },
     "android": {
-      "package": "com.making.sense.test"
+      "package": "com.making.sense.development"
     },
     "icon": "./icon.png",
     "packagerOpts": {

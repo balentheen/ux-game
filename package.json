@@ -2,14 +2,14 @@
   "name": "opya-parents-app-mobile",
   "version": "0.1.0",
   "private": true,
-  "main": "./node_modules/react-native-scripts-ts/build/bin/crna-entry.js",
+  "main": "./node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "react-native-scripts-ts start",
+    "start": "yarn expo start -c",
     "start:dev": "yarn build-config:development && yarn start",
     "eject": "react-native-scripts-ts eject",
     "android": "react-native-scripts-ts android",
     "ios": "react-native-scripts-ts ios",
-    "test": "yarn build-config:test && jest --forceExit --maxWorkers=4",
+    "test": "yarn build-config:test && jest --forceExit --maxWorkers=10 --detectOpenHandles",
     "lint": "tslint -c ./tslint.json 'src/**/*.{ts,tsx}'",
     "build-config:development": "cross-env NODE_ENV=development ts-node ./build-config.ts",
     "build-config:qa": "cross-env NODE_ENV=qa ts-node ./build-config.ts",
@@ -26,11 +26,13 @@
     "verbose": false,
     "setupTestFrameworkScriptFile": "enzyme",
     "setupFiles": [
-      "enzyme-react-16-adapter-setup"
+      "enzyme-react-16-adapter-setup",
+      "<rootDir>/jest-setup.js"
     ],
     "globals": {
       "ts-jest": {
-        "useBabelrc": true
+        "babelConfig": true,
+        "tsConfig": "tsconfig.json"
       }
     },
     "moduleFileExtensions": [
@@ -51,6 +53,7 @@
     "collectCoverage": true,
     "collectCoverageFrom": [
       "<rootDir>/src/**/*.{ts,tsx}",
+      "<rootDir>/src/**/**/*.{ts,tsx}",
       "!<rootDir>/src/modules/models/**/*.{ts,tsx}",
       "!<rootDir>/src/constants/**/*.ts",
       "!<rootDir>/src/test/**/*.ts",
@@ -72,9 +75,9 @@
   },
   "dependencies": {
     "@types/node": "^10.11.7",
-    "expo": "^27.0.1",
-    "react": "16.3.1",
-    "react-native": "~0.55.2",
+    "expo": "^32.0.1",
+    "react": "16.5.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
     "react-native-elements": "^0.19.1",
     "react-navigation": "^2.17.0",
     "react-redux": "^5.0.7",
@@ -85,18 +88,20 @@
     "rxjs": "^6.3.2"
   },
   "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.2.0",
     "@types/enzyme": "^3.1.13",
-    "@types/expo": "^27.0.9",
+    "@types/expo": "32.0.13",
     "@types/jest": "^22.2.3",
     "@types/pubnub": "^4.0.2",
     "@types/react": "^16.3.14",
-    "@types/react-native": "^0.55.14",
+    "@types/react-native": "^0.57.60",
     "@types/react-navigation": "^2.0.23",
     "@types/react-redux": "^6.0.6",
     "@types/react-test-renderer": "^16.0.2",
     "@types/redux": "^3.6.0",
     "@types/redux-devtools-extension": "^2.13.2",
     "@types/redux-test-utils": "^0.2.0",
+    "babel-core": "7.0.0-bridge.0",
     "babel-plugin-inline-dotenv": "^1.1.2",
     "babel-preset-react-native": "^4.0.1",
     "cross-env": "^5.2.0",
@@ -105,14 +110,14 @@
     "enzyme-react-16-adapter-setup": "^0.1.0",
     "expo-cli": "^2.1.2",
     "jest-enzyme": "^6.0.4",
-    "jest-expo": "~27.0.0",
+    "jest-expo": "~32.0.0",
     "npx": "^10.2.0",
     "pre-commit": "^1.2.2",
     "react-dom": "^16.5.0",
     "react-native-scripts-ts": "1.15.0",
     "react-native-typescript-transformer": "^1.2.3",
     "redux-test-utils": "^0.2.2",
-    "ts-jest": "^22.4.6",
+    "ts-jest": "^23.10.5",
     "ts-node": "^7.0.1",
     "tslib": "^1.9.1",
     "tslint": "^5.11.0",
